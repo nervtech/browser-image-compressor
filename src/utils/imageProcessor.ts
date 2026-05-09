@@ -11,7 +11,7 @@ interface FileItem {
 }
 
 // Supported image formats
-const IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+export const IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/heic', 'image/heif']
 
 // Process dragged files and directories
 export async function processFiles(items: DataTransferItemList): Promise<FileItem[]> {

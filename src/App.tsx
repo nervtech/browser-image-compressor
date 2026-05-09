@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import './App.css'
-import { compressImage, processFiles, createZip, compressImageWithTargetSize } from './utils/imageProcessor'
+import { compressImage, processFiles, createZip, compressImageWithTargetSize, IMAGE_FORMATS } from './utils/imageProcessor'
 import { useLocale } from './i18n/context'
 import { type Locale } from './i18n/locales'
 
@@ -87,7 +87,7 @@ function App() {
     const items: FileItem[] = []
     for (let i = 0; i < selected.length; i++) {
       const file = selected[i]
-      if (file.type.startsWith('image/')) {
+      if (IMAGE_FORMATS.includes(file.type)) {
         items.push({
           id: nextId++,
           name: file.name,
@@ -238,7 +238,8 @@ function App() {
   }
 
   const progressPercent = files.length > 0 ? Math.round((completedCount / files.length) * 100) : 0
-  const allDone = files.length > 0 && files.every(f => f.status === 'completed')
+  const allDone = files.length > 0 && files.every(f => f.status === 'completed' || f.status === 'error')
+  const hasCompressed = files.some(f => f.status === 'completed' && f.compressedFile)
   const hasAnyFile = files.length > 0
 
   return (
@@ -461,7 +462,7 @@ function App() {
                   {t('button.compressing')}
                 </button>
               )}
-              {allDone && files.length > 1 && (
+              {allDone && hasCompressed && files.length > 1 && (
                 <button onClick={handleDownloadAll} className="btn-primary btn-download">
                   <svg xmlns="http://www.w3.org/2000/svg" className="download-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
