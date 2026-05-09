@@ -2,6 +2,8 @@
 
 基于浏览器的图片压缩工具，使用 React + TypeScript + Vite 构建。支持拖放、批量处理、质量/大小控制，以及多语言界面。
 
+> 在线体验：[nervtech.github.io/browser-image-compressor](https://nervtech.github.io/browser-image-compressor/)
+
 > [English](../README.md) | [日本語](README.ja.md)
 
 ## 演示

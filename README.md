@@ -2,6 +2,8 @@
 
 A browser-based image compression tool built with React + TypeScript + Vite. Supports drag-and-drop, batch processing, quality/size control, and multilingual UI.
 
+> Try it online: [nervtech.github.io/browser-image-compressor](https://nervtech.github.io/browser-image-compressor/)
+
 > [中文文档](docs/README.zh-CN.md) | [日本語](docs/README.ja.md)
 
 ## Demo

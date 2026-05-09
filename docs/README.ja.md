@@ -2,6 +2,8 @@
 
 ブラウザベースの画像圧縮ツール。React + TypeScript + Vite で構築。ドラッグ＆ドロップ、バッチ処理、品質/サイズ制御、多言語UIに対応。
 
+> オンラインで試す：[nervtech.github.io/browser-image-compressor](https://nervtech.github.io/browser-image-compressor/)
+
 > [English](../README.md) | [中文](README.zh-CN.md)
 
 ## デモ
