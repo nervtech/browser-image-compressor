@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import './App.css'
-import { compressImage, processFiles, createZip, compressImageWithTargetSize, IMAGE_FORMATS } from './utils/imageProcessor'
+import { compressImage, processFiles, createZip, compressImageWithTargetSize, IMAGE_FORMATS, isValidImage } from './utils/imageProcessor'
 import { useLocale } from './i18n/context'
 import { type Locale } from './i18n/locales'
 
@@ -53,6 +53,24 @@ function App() {
     setCompletedCount(0)
   }
 
+  const filterValidImages = async (items: { file: File; name: string; size: number; type: string }[]): Promise<FileItem[]> => {
+    const valid: FileItem[] = []
+    for (const item of items) {
+      if (await isValidImage(item.file)) {
+        valid.push({
+          id: nextId++,
+          name: item.name,
+          size: item.size,
+          type: item.type,
+          file: item.file,
+          preview: URL.createObjectURL(item.file),
+          status: 'pending' as const,
+        })
+      }
+    }
+    return valid
+  }
+
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
     setIsDragging(true)
@@ -71,12 +89,8 @@ function App() {
 
     if (e.dataTransfer.items) {
       const processed = await processFiles(e.dataTransfer.items)
-      const withPreview = processed.map(f => ({
-        ...f,
-        id: nextId++,
-        preview: URL.createObjectURL(f.file),
-      }))
-      addFiles(withPreview)
+      const validFiles = await filterValidImages(processed)
+      addFiles(validFiles)
     }
   }
 
@@ -87,7 +101,7 @@ function App() {
     const items: FileItem[] = []
     for (let i = 0; i < selected.length; i++) {
       const file = selected[i]
-      if (IMAGE_FORMATS.includes(file.type)) {
+      if (IMAGE_FORMATS.includes(file.type) && await isValidImage(file)) {
         items.push({
           id: nextId++,
           name: file.name,

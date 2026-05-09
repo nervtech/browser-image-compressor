@@ -13,6 +13,16 @@ interface FileItem {
 // Supported image formats
 export const IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif', 'image/heic', 'image/heif']
 
+// Validate that a file is a genuine, loadable image
+export function isValidImage(file: File): Promise<boolean> {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => resolve(true)
+    img.onerror = () => resolve(false)
+    img.src = URL.createObjectURL(file)
+  })
+}
+
 // Process dragged files and directories
 export async function processFiles(items: DataTransferItemList): Promise<FileItem[]> {
   const files: FileItem[] = []
