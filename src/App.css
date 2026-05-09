@@ -95,6 +95,10 @@ body {
   flex: 1 1 160px;
 }
 
+.toolbar-item-wide {
+  flex: 3 1 320px;
+}
+
 .setting-label {
   font-size: 0.75rem;
   font-weight: 600;

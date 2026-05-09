@@ -278,9 +278,11 @@ function App() {
             </select>
           </div>
 
-          {compressionMode === 'quality' ? (
-            <div className="toolbar-item">
-              <label className="setting-label">{t('settings.quality')}</label>
+          <div className="toolbar-item toolbar-item-wide">
+            <label className="setting-label">
+              {compressionMode === 'quality' ? t('settings.quality') : t('settings.targetSize')}
+            </label>
+            {compressionMode === 'quality' ? (
               <div className="quality-row">
                 <input
                   type="range"
@@ -293,10 +295,7 @@ function App() {
                 />
                 <span className="quality-value">{Math.round(quality * 100)}%</span>
               </div>
-            </div>
-          ) : (
-            <div className="toolbar-item">
-              <label className="setting-label">{t('settings.targetSize')}</label>
+            ) : (
               <div className="size-row">
                 <input
                   type="text"
@@ -325,8 +324,8 @@ function App() {
                   {t('settings.lockResolution')}
                 </label>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           <div className="toolbar-item">
             <label className="setting-label">{t('settings.format')}</label>
