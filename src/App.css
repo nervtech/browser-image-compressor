@@ -186,15 +186,25 @@ body {
   transform: translateX(16px);
 }
 
-.setting-range {
-  width: 100%;
-  accent-color: #3B82F6;
+.quality-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.setting-value-inline {
-  font-size: 0.8125rem;
-  color: #6b7280;
-  text-align: center;
+.setting-range {
+  flex: 1;
+  height: 6px;
+  accent-color: #3B82F6;
+  cursor: pointer;
+}
+
+.quality-value {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #3B82F6;
+  min-width: 40px;
+  text-align: right;
 }
 
 /* === Drop Area === */

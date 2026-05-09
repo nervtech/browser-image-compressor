@@ -281,16 +281,18 @@ function App() {
           {compressionMode === 'quality' ? (
             <div className="toolbar-item">
               <label className="setting-label">{t('settings.quality')}</label>
-              <input
-                type="range"
-                min="0.1"
-                max="1"
-                step="0.1"
-                value={quality}
-                onChange={(e) => setQuality(parseFloat(e.target.value))}
-                className="setting-range"
-              />
-              <span className="setting-value-inline">{Math.round(quality * 100)}%</span>
+              <div className="quality-row">
+                <input
+                  type="range"
+                  min="0.1"
+                  max="1"
+                  step="0.1"
+                  value={quality}
+                  onChange={(e) => setQuality(parseFloat(e.target.value))}
+                  className="setting-range"
+                />
+                <span className="quality-value">{Math.round(quality * 100)}%</span>
+              </div>
             </div>
           ) : (
             <div className="toolbar-item">
