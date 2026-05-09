@@ -315,15 +315,13 @@ function App() {
               />
             </div>
             <div className="toolbar-item toolbar-checkbox">
-              <label className="setting-checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={lockResolution}
-                  onChange={(e) => setLockResolution(e.target.checked)}
-                  className="setting-checkbox"
-                />
-                {t('settings.lockResolution')}
-              </label>
+              <label className="setting-label">{t('settings.lockResolution')}</label>
+              <input
+                type="checkbox"
+                checked={lockResolution}
+                onChange={(e) => setLockResolution(e.target.checked)}
+                className="setting-checkbox"
+              />
             </div>
             </>
           )}
