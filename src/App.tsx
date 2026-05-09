@@ -267,7 +267,7 @@ function App() {
         {/* Settings toolbar — always visible */}
         <div className="settings-toolbar">
           <div className="toolbar-item">
-            <label className="setting-label">{t('settings.mode')}</label>
+            <span className="toolbar-label">{t('settings.mode')}</span>
             <select
               value={compressionMode}
               onChange={(e) => setCompressionMode(e.target.value as 'quality' | 'size')}
@@ -278,10 +278,10 @@ function App() {
             </select>
           </div>
 
-          <div className="toolbar-item toolbar-item-wide">
-            <label className="setting-label">
+          <div className="toolbar-item toolbar-item-grow">
+            <span className="toolbar-label">
               {compressionMode === 'quality' ? t('settings.quality') : t('settings.targetSize')}
-            </label>
+            </span>
             {compressionMode === 'quality' ? (
               <div className="quality-row">
                 <input
@@ -328,7 +328,7 @@ function App() {
           </div>
 
           <div className="toolbar-item">
-            <label className="setting-label">{t('settings.format')}</label>
+            <span className="toolbar-label">{t('settings.format')}</span>
             <select value={format} onChange={(e) => setFormat(e.target.value)} className="setting-select">
               <option value="webp">WebP</option>
               <option value="jpeg">JPEG</option>
