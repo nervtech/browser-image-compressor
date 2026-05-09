@@ -1,0 +1,588 @@
+/* === Reset & Base === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+  line-height: 1.5;
+}
+
+/* === Layout === */
+.app {
+  min-height: 100vh;
+  padding: 24px 16px 120px;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* === Header === */
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-label {
+  font-size: 0.8125rem;
+  color: #9ca3af;
+}
+
+.lang-select {
+  padding: 4px 8px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: #374151;
+  background: #fff;
+  cursor: pointer;
+}
+
+.lang-select:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 0.9375rem;
+  color: #9ca3af;
+}
+
+/* === Settings Toolbar === */
+.settings-toolbar {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  flex-wrap: wrap;
+}
+
+.toolbar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.setting-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.setting-select,
+.setting-input {
+  padding: 8px 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #111827;
+  background: #f9fafb;
+  transition: border-color 0.15s;
+}
+
+.setting-select:focus,
+.setting-input:focus {
+  outline: none;
+  border-color: #3B82F6;
+  background: #fff;
+}
+
+.size-input {
+  width: 100px;
+}
+
+.setting-range {
+  width: 100%;
+  accent-color: #3B82F6;
+}
+
+.setting-value-inline {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* === Drop Area === */
+.drop-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 48px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fff;
+}
+
+.drop-area:hover {
+  border-color: #9ca3af;
+  background: #fafafa;
+}
+
+.drop-area-compact {
+  padding: 16px 24px;
+}
+
+.drag-over {
+  border-color: #3B82F6 !important;
+  background-color: #eff6ff !important;
+}
+
+.drop-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.drop-icon {
+  width: 28px;
+  height: 28px;
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.drop-text {
+  font-size: 0.9375rem;
+  color: #6b7280;
+}
+
+/* === Progress Bar === */
+.progress-section {
+  margin-bottom: 16px;
+}
+
+.progress-bar-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3B82F6, #60A5FA);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* === File List Header === */
+.file-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.file-list-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.file-list-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* === Small Buttons === */
+.btn-small {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-secondary {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.btn-secondary:hover {
+  background: #d1d5db;
+}
+
+.btn-danger {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-danger:hover {
+  background: #fecaca;
+}
+
+.btn-danger:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* === Card Grid === */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* === File Card === */
+.file-card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  position: relative;
+  transition: box-shadow 0.15s;
+}
+
+.file-card:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card-processing {
+  ring: 2px solid #3B82F6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4);
+}
+
+.card-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.file-card:hover .card-remove {
+  opacity: 1;
+}
+
+.card-remove:hover {
+  background: rgba(220, 38, 38, 0.85);
+}
+
+.card-remove:disabled {
+  display: none;
+}
+
+/* Card Preview */
+.card-preview {
+  aspect-ratio: 1;
+  background: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-spinner {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.7);
+}
+
+.card-spinner::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  margin: -14px 0 0 -14px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #3B82F6;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Card Body */
+.card-body {
+  padding: 10px 12px;
+}
+
+.card-name {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 6px;
+}
+
+.card-sizes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+}
+
+.card-original {
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+.card-arrow {
+  color: #d1d5db;
+}
+
+.card-compressed {
+  color: #374151;
+  font-weight: 600;
+}
+
+.card-saving {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.saving-good {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.saving-ok {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.saving-low {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* Status Badge */
+.card-status-badge {
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.status-pending {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.status-processing {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-completed {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.status-error {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Card Download Button */
+.btn-card-download {
+  width: 100%;
+  padding: 6px 0;
+  border: none;
+  border-radius: 6px;
+  background: #3B82F6;
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-card-download:hover {
+  background: #2563eb;
+}
+
+/* === Bottom Action Bar === */
+.action-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 40px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  min-width: 200px;
+}
+
+.btn-compress {
+  background: #3B82F6;
+  color: #fff;
+}
+
+.btn-compress:hover {
+  background: #2563eb;
+}
+
+.btn-download {
+  background: #10B981;
+  color: #fff;
+}
+
+.btn-download:hover {
+  background: #059669;
+}
+
+.btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-disabled:hover {
+  background: #3B82F6;
+}
+
+.btn-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* Download icon in buttons */
+.download-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* === Responsive === */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .settings-toolbar {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .toolbar-item {
+    flex: 1 1 120px;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .drop-area {
+    padding: 32px 20px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Phone */
+@media (max-width: 480px) {
+  .app {
+    padding: 12px 8px 100px;
+  }
+
+  .settings-toolbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .card-body {
+    padding: 8px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    max-width: none;
+  }
+
+  .drop-area {
+    padding: 24px 16px;
+  }
+}
