@@ -8,7 +8,7 @@ function detectLocale(): Locale {
   if (browserLang.startsWith('zh')) return 'zh-CN'
   if (browserLang.startsWith('ja')) return 'ja'
   if (browserLang.startsWith('en')) return 'en'
-  return 'zh-CN'
+  return 'en'
 }
 
 interface LocaleContextValue {

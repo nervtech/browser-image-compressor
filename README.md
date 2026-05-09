@@ -1,73 +1,72 @@
-# React + TypeScript + Vite
+# Image Compressor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser-based image compression tool built with React + TypeScript + Vite. Supports drag-and-drop, batch processing, quality/size control, and multilingual UI.
 
-Currently, two official plugins are available:
+> [中文文档](docs/README.zh-CN.md) | [日本語](docs/README.ja.md)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Drag & Drop** — Drop images or folders directly onto the page
+- **Two Compression Modes** — Quality control (slider) or target file size (KB)
+- **Lock Resolution** — Optional setting to preserve original image dimensions
+- **Batch Processing** — Compress multiple images with 4 concurrent workers
+- **Live Preview** — Thumbnail cards with compression ratio badges
+- **Output Formats** — JPEG, WebP, PNG
+- **Multilingual** — English, 中文, 日本語 (auto-detected from browser)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Quick Start
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open http://localhost:5173 in your browser.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Build for Production
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
 ```
+
+The output is in `dist/`. Serve it with any static file server:
+
+```bash
+npx serve dist
+```
+
+### Deploy to GitHub Pages
+
+1. Push the repo to GitHub
+2. Go to Settings → Pages → Source: GitHub Actions, or set branch to `main` with folder `/docs`
+3. If using manual deploy: build locally and push `dist/` to a `gh-pages` branch
+
+## Usage
+
+1. Open the app in a browser
+2. Configure compression settings in the toolbar
+3. Drag and drop images or folders onto the drop zone
+4. Click **Compress Images** to process all files
+5. Download individual files or all as a ZIP
+
+## Project Structure
+
+```
+src/
+  i18n/           — Locale context and translation dictionaries
+  utils/          — Image processing, ZIP creation
+  App.tsx         — Main application component
+  App.css         — Styles
+  main.tsx        — Entry point
+docs/             — Documentation in multiple languages
+```
+
+## Tech Stack
+
+- React 19 + TypeScript
+- Vite 8
+- JSZip for ZIP packaging
+
+## License
+
+MIT
