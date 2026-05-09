@@ -31,7 +31,7 @@ function App() {
   const [files, setFiles] = useState<FileItem[]>([])
   const [isDragging, setIsDragging] = useState(false)
   const [quality, setQuality] = useState(0.7)
-  const [format, setFormat] = useState('webp')
+  const [format, setFormat] = useState('jpeg')
   const [isCompressing, setIsCompressing] = useState(false)
   const [compressionMode, setCompressionMode] = useState<'quality' | 'size'>('size')
   const [targetSize, setTargetSize] = useState(200)

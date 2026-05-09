@@ -105,37 +105,54 @@ function getFileFromEntry(entry: FileSystemFileEntry): Promise<File | null> {
 }
 
 // 压缩图片
-export async function compressImage(file: File, quality: number, format: string): Promise<File> {
+export async function compressImage(
+  file: File,
+  quality: number,
+  format: string,
+  maxWidth?: number,
+  maxHeight?: number,
+): Promise<File> {
   return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')
     const img = new Image()
-    
+
     img.onload = () => {
-      // 设置canvas尺寸为原始图片尺寸
-      canvas.width = img.width
-      canvas.height = img.height
-      
-      // 绘制图片
-      ctx?.drawImage(img, 0, 0)
-      
-      // 对于PNG格式，如果质量小于1，可能会导致文件变大，所以我们使用无损压缩
+      let w = img.width
+      let h = img.height
+
+      // Apply dimension limits, maintaining aspect ratio
+      if (maxWidth && w > maxWidth) {
+        h = Math.round(h * (maxWidth / w))
+        w = maxWidth
+      }
+      if (maxHeight && h > maxHeight) {
+        w = Math.round(w * (maxHeight / h))
+        h = maxHeight
+      }
+
+      canvas.width = w
+      canvas.height = h
+      ctx?.drawImage(img, 0, 0, w, h)
+
+      // PNG ignores quality parameter, always use lossless
       let finalQuality = quality
       if (format === 'png' && quality < 1) {
         finalQuality = 1
       }
-      
-      // 将canvas转换为Blob
+
       canvas.toBlob(
         (blob) => {
           if (blob) {
-            // 如果压缩后的文件比原始文件大，我们使用原始文件
+            // If compressed is larger than original, keep original
             if (blob.size > file.size) {
               resolve(file)
             } else {
-              const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, `.${format}`), {
-                type: `image/${format}`
-              })
+              const compressedFile = new File(
+                [blob],
+                file.name.replace(/\.[^/.]+$/, `.${format}`),
+                { type: `image/${format}` },
+              )
               resolve(compressedFile)
             }
           } else {
@@ -143,40 +160,90 @@ export async function compressImage(file: File, quality: number, format: string)
           }
         },
         `image/${format}`,
-        finalQuality
+        finalQuality,
       )
     }
-    
+
     img.onerror = () => {
       reject(new Error('Failed to load image'))
     }
-    
+
     img.src = URL.createObjectURL(file)
   })
 }
 
-// 自动调整压缩质量以满足目标大小
-export async function compressImageWithTargetSize(file: File, targetSize: number, format: string): Promise<File> {
-  let quality = 1
-  let compressedFile: File | null = null
-  let attempt = 0
-  const maxAttempts = 20
-  
-  while (attempt < maxAttempts) {
-    compressedFile = await compressImage(file, quality, format)
-    
-    if (compressedFile.size <= targetSize) {
-      // 如果已经满足目标大小，返回当前压缩后的文件
-      return compressedFile
-    }
-    
-    // 如果还没有满足，继续降低质量
-    quality = Math.max(0.1, quality - 0.05)
-    attempt++
+// 二分搜索 + 阶梯降分辨率，达成目标文件大小
+export async function compressImageWithTargetSize(
+  file: File,
+  targetSize: number,
+  format: string,
+): Promise<File> {
+  // Step 1: Binary search on quality (at original resolution)
+  let bestResult = await binarySearchQuality(file, targetSize, format)
+
+  if (bestResult && bestResult.size <= targetSize) {
+    return bestResult
   }
-  
-  // 如果经过maxAttempts次尝试后仍然没有满足目标大小，返回最后一次尝试的结果
-  return compressedFile || file
+
+  // Step 2: If quality alone can't reach target, progressively reduce resolution
+  const resolutions = [2560, 1920, 1280, 960, 640]
+  for (const maxDim of resolutions) {
+    const img = await loadImage(file)
+    const longestSide = Math.max(img.width, img.height)
+    if (longestSide <= maxDim) continue
+
+    bestResult = await binarySearchQuality(file, targetSize, format, maxDim)
+    if (bestResult && bestResult.size <= targetSize) {
+      return bestResult
+    }
+  }
+
+  // Return best effort result (smallest we achieved)
+  return bestResult || file
+}
+
+// 二分搜索最佳质量参数
+async function binarySearchQuality(
+  file: File,
+  targetSize: number,
+  format: string,
+  maxDimension?: number,
+): Promise<File | null> {
+  let lo = 0.05
+  let hi = 1.0
+  let bestFile: File | null = null
+  let bestSize = Infinity
+  const ITERATIONS = 8
+
+  for (let i = 0; i < ITERATIONS; i++) {
+    const mid = (lo + hi) / 2
+    const result = await compressImage(file, mid, format, maxDimension, maxDimension)
+
+    if (result.size <= targetSize) {
+      // This quality works — try higher
+      bestFile = result
+      bestSize = result.size
+      lo = mid
+    } else {
+      // Too large — need lower quality
+      hi = mid
+    }
+
+    // If we're close enough to target (within 10%), stop early
+    if (bestFile && bestSize >= targetSize * 0.9) break
+  }
+
+  return bestFile
+}
+
+// 加载图片获取尺寸
+function loadImage(file: File): Promise<HTMLImageElement> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    img.onload = () => resolve(img)
+    img.onerror = () => reject(new Error('Failed to load image for dimension check'))
+    img.src = URL.createObjectURL(file)
+  })
 }
 
 // 创建ZIP文件
