@@ -10,10 +10,10 @@ interface FileItem {
   compressedFile?: File
 }
 
-// 支持的图片格式
+// Supported image formats
 const IMAGE_FORMATS = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
-// 处理拖放的文件和目录
+// Process dragged files and directories
 export async function processFiles(items: DataTransferItemList): Promise<FileItem[]> {
   const files: FileItem[] = []
   
@@ -44,7 +44,7 @@ export async function processFiles(items: DataTransferItemList): Promise<FileIte
   return files
 }
 
-// 递归处理文件系统条目
+// Recursively process file system entries
 async function processEntry(entry: FileSystemEntry, path: string, files: FileItem[]): Promise<void> {
   if (entry.isDirectory) {
     const directoryReader = (entry as FileSystemDirectoryEntry).createReader()
@@ -69,7 +69,7 @@ async function processEntry(entry: FileSystemEntry, path: string, files: FileIte
   }
 }
 
-// 读取目录内容
+// Read directory contents
 function readDirectory(reader: FileSystemDirectoryReader): Promise<FileSystemEntry[]> {
   return new Promise((resolve, reject) => {
     const entries: FileSystemEntry[] = []
@@ -94,7 +94,7 @@ function readDirectory(reader: FileSystemDirectoryReader): Promise<FileSystemEnt
   })
 }
 
-// 从文件条目获取文件
+// Get file from file entry
 function getFileFromEntry(entry: FileSystemFileEntry): Promise<File | null> {
   return new Promise((resolve) => {
     entry.file(
@@ -104,7 +104,7 @@ function getFileFromEntry(entry: FileSystemFileEntry): Promise<File | null> {
   })
 }
 
-// 压缩图片
+// Compress image
 export async function compressImage(
   file: File,
   quality: number,
@@ -172,7 +172,7 @@ export async function compressImage(
   })
 }
 
-// 二分搜索 + 阶梯降分辨率，达成目标文件大小
+// Binary search + step-down resolution to hit target file size
 export async function compressImageWithTargetSize(
   file: File,
   targetSize: number,
@@ -202,7 +202,7 @@ export async function compressImageWithTargetSize(
   return bestResult || file
 }
 
-// 二分搜索最佳质量参数
+// Binary search for optimal quality parameter
 async function binarySearchQuality(
   file: File,
   targetSize: number,
@@ -236,7 +236,7 @@ async function binarySearchQuality(
   return bestFile
 }
 
-// 加载图片获取尺寸
+// Load image to get dimensions
 function loadImage(file: File): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image()
@@ -246,17 +246,17 @@ function loadImage(file: File): Promise<HTMLImageElement> {
   })
 }
 
-// 创建ZIP文件
+// Create ZIP file
 export async function createZip(files: File[]): Promise<Blob> {
   const zip = new JSZip()
   
-  // 为每个文件添加到zip
+  // Add each file to the zip
   for (const file of files) {
     const arrayBuffer = await file.arrayBuffer()
     zip.file(file.name, arrayBuffer)
   }
   
-  // 生成zip文件
+  // Generate the zip file
   const blob = await zip.generateAsync({
     type: 'blob',
     compression: 'DEFLATE',
