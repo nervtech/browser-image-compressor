@@ -177,6 +177,7 @@ export async function compressImageWithTargetSize(
   file: File,
   targetSize: number,
   format: string,
+  lockResolution = false,
 ): Promise<File> {
   // Step 1: Binary search on quality (at original resolution)
   let bestResult = await binarySearchQuality(file, targetSize, format)
@@ -186,15 +187,18 @@ export async function compressImageWithTargetSize(
   }
 
   // Step 2: If quality alone can't reach target, progressively reduce resolution
-  const resolutions = [2560, 1920, 1280, 960, 640]
-  for (const maxDim of resolutions) {
-    const img = await loadImage(file)
-    const longestSide = Math.max(img.width, img.height)
-    if (longestSide <= maxDim) continue
+  // (skipped when lockResolution is enabled)
+  if (!lockResolution) {
+    const resolutions = [2560, 1920, 1280, 960, 640]
+    for (const maxDim of resolutions) {
+      const img = await loadImage(file)
+      const longestSide = Math.max(img.width, img.height)
+      if (longestSide <= maxDim) continue
 
-    bestResult = await binarySearchQuality(file, targetSize, format, maxDim)
-    if (bestResult && bestResult.size <= targetSize) {
-      return bestResult
+      bestResult = await binarySearchQuality(file, targetSize, format, maxDim)
+      if (bestResult && bestResult.size <= targetSize) {
+        return bestResult
+      }
     }
   }
 

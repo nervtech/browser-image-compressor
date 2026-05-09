@@ -31,6 +31,7 @@ export type MessageKey =
   | 'button.clearAll'
   | 'button.addFiles'
   | 'progress.compressOne'
+  | 'settings.lockResolution'
   | 'lang.switch'
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -65,6 +66,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     'button.clearAll': '清空',
     'button.addFiles': '添加文件',
     'progress.compressOne': '压缩中 ({current}/{total})',
+    'settings.lockResolution': '锁定分辨率',
     'lang.switch': '语言',
   },
   en: {
@@ -98,6 +100,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     'button.clearAll': 'Clear All',
     'button.addFiles': 'Add Files',
     'progress.compressOne': 'Compressing ({current}/{total})',
+    'settings.lockResolution': 'Lock Resolution',
     'lang.switch': 'Language',
   },
   ja: {
@@ -131,6 +134,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     'button.clearAll': '全てクリア',
     'button.addFiles': 'ファイル追加',
     'progress.compressOne': '圧縮中 ({current}/{total})',
+    'settings.lockResolution': '解像度を固定',
     'lang.switch': '言語',
   },
 }

@@ -36,6 +36,7 @@ function App() {
   const [compressionMode, setCompressionMode] = useState<'quality' | 'size'>('size')
   const [targetSize, setTargetSize] = useState(200)
   const [targetSizeStr, setTargetSizeStr] = useState('200')
+  const [lockResolution, setLockResolution] = useState(false)
   const [completedCount, setCompletedCount] = useState(0)
   const dropRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -152,7 +153,7 @@ function App() {
         let compressedFile: File
         if (compressionMode === 'size') {
           const targetSizeBytes = targetSize * 1024
-          compressedFile = await compressImageWithTargetSize(item.file, targetSizeBytes, format)
+          compressedFile = await compressImageWithTargetSize(item.file, targetSizeBytes, format, lockResolution)
         } else {
           compressedFile = await compressImage(item.file, quality, format)
         }
@@ -292,6 +293,7 @@ function App() {
               <span className="setting-value-inline">{Math.round(quality * 100)}%</span>
             </div>
           ) : (
+            <>
             <div className="toolbar-item">
               <label className="setting-label">{t('settings.targetSize')}</label>
               <input
@@ -300,7 +302,6 @@ function App() {
                 value={targetSizeStr}
                 onChange={(e) => {
                   const v = e.target.value
-                  // Allow empty or digits only
                   if (v === '' || /^\d+$/.test(v)) {
                     setTargetSizeStr(v)
                     const num = parseInt(v)
@@ -313,6 +314,18 @@ function App() {
                 className="setting-input size-input"
               />
             </div>
+            <div className="toolbar-item toolbar-checkbox">
+              <label className="setting-checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={lockResolution}
+                  onChange={(e) => setLockResolution(e.target.checked)}
+                  className="setting-checkbox"
+                />
+                {t('settings.lockResolution')}
+              </label>
+            </div>
+            </>
           )}
 
           <div className="toolbar-item">

@@ -125,6 +125,28 @@ body {
   width: 100px;
 }
 
+.toolbar-checkbox {
+  justify-content: flex-end;
+}
+
+.setting-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.setting-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #3B82F6;
+  cursor: pointer;
+}
+
 .setting-range {
   width: 100%;
   accent-color: #3B82F6;
