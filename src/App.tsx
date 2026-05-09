@@ -319,6 +319,7 @@ function App() {
                     checked={lockResolution}
                     onChange={(e) => setLockResolution(e.target.checked)}
                   />
+                  <span className="lock-resolution-toggle" />
                   {t('settings.lockResolution')}
                 </label>
               </div>
