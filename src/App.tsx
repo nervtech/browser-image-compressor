@@ -293,7 +293,6 @@ function App() {
               <span className="setting-value-inline">{Math.round(quality * 100)}%</span>
             </div>
           ) : (
-            <>
             <div className="toolbar-item">
               <label className="setting-label">{t('settings.targetSize')}</label>
               <input
@@ -314,16 +313,6 @@ function App() {
                 className="setting-input size-input"
               />
             </div>
-            <div className="toolbar-item toolbar-checkbox">
-              <label className="setting-label">{t('settings.lockResolution')}</label>
-              <input
-                type="checkbox"
-                checked={lockResolution}
-                onChange={(e) => setLockResolution(e.target.checked)}
-                className="setting-checkbox"
-              />
-            </div>
-            </>
           )}
 
           <div className="toolbar-item">
@@ -335,6 +324,21 @@ function App() {
             </select>
           </div>
         </div>
+
+        {/* Lock resolution — shown only in size mode */}
+        {compressionMode === 'size' && (
+          <div className="lock-resolution-bar">
+            <label className="lock-resolution-label">
+              <input
+                type="checkbox"
+                checked={lockResolution}
+                onChange={(e) => setLockResolution(e.target.checked)}
+                className="setting-checkbox"
+              />
+              {t('settings.lockResolution')}
+            </label>
+          </div>
+        )}
 
         {/* Main drop zone */}
         <div
