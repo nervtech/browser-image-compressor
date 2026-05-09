@@ -295,23 +295,33 @@ function App() {
           ) : (
             <div className="toolbar-item">
               <label className="setting-label">{t('settings.targetSize')}</label>
-              <input
-                type="text"
-                inputMode="numeric"
-                value={targetSizeStr}
-                onChange={(e) => {
-                  const v = e.target.value
-                  if (v === '' || /^\d+$/.test(v)) {
-                    setTargetSizeStr(v)
-                    const num = parseInt(v)
-                    if (!isNaN(num) && num >= 1) {
-                      setTargetSize(num)
+              <div className="size-row">
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  value={targetSizeStr}
+                  onChange={(e) => {
+                    const v = e.target.value
+                    if (v === '' || /^\d+$/.test(v)) {
+                      setTargetSizeStr(v)
+                      const num = parseInt(v)
+                      if (!isNaN(num) && num >= 1) {
+                        setTargetSize(num)
+                      }
                     }
-                  }
-                }}
-                onBlur={handleTargetSizeBlur}
-                className="setting-input size-input"
-              />
+                  }}
+                  onBlur={handleTargetSizeBlur}
+                  className="setting-input size-input"
+                />
+                <label className="lock-resolution-label">
+                  <input
+                    type="checkbox"
+                    checked={lockResolution}
+                    onChange={(e) => setLockResolution(e.target.checked)}
+                  />
+                  {t('settings.lockResolution')}
+                </label>
+              </div>
             </div>
           )}
 
@@ -324,21 +334,6 @@ function App() {
             </select>
           </div>
         </div>
-
-        {/* Lock resolution — shown only in size mode */}
-        {compressionMode === 'size' && (
-          <div className="lock-resolution-bar">
-            <label className="lock-resolution-label">
-              <input
-                type="checkbox"
-                checked={lockResolution}
-                onChange={(e) => setLockResolution(e.target.checked)}
-                className="setting-checkbox"
-              />
-              {t('settings.lockResolution')}
-            </label>
-          </div>
-        )}
 
         {/* Main drop zone */}
         <div
