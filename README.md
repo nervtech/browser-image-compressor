@@ -4,6 +4,10 @@ A browser-based image compression tool built with React + TypeScript + Vite. Sup
 
 > [中文文档](docs/README.zh-CN.md) | [日本語](docs/README.ja.md)
 
+## Demo
+
+![Demo](docs/demo.gif)
+
 ## Features
 
 - **Drag & Drop** — Drop images or folders directly onto the page
